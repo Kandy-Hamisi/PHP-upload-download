@@ -6,7 +6,7 @@ $mysqli = mysqli_connect("localhost", "root", "", "uploads");
 
 // Upload Files
 
-if (isset($_POS['save'])) { //if save button is clicked on submit
+if (isset($_POST['save'])) { //if save button is clicked on submit
 
     //name of the uploaded file
     $filename = $_FILES['myfile']['name'];
