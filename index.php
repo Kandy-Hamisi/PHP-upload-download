@@ -1,8 +1,10 @@
+<?php include "filesLogic.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <link rel="stylesheet" href="style.css">
     <title>Files Upload and Download</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div class="container">
