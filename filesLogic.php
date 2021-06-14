@@ -4,6 +4,12 @@
 $mysqli = mysqli_connect("localhost", "root", "", "uploads");
 
 
+// selecting from the files table
+$sql = "SELECT * FROM files";
+$result = mysqli_query($mysqli, $sql);
+
+$files = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
 // Upload Files
 
 if (isset($_POST['save'])) { //if save button is clicked on submit
@@ -38,4 +44,41 @@ if (isset($_POST['save'])) { //if save button is clicked on submit
     }
 }
 
+
+// Downloading the files
+
+if (isset($_GET['file_id'])) {
+    $id = $_GET['file_id'];
+
+
+    //fetch file to download from database
+    $sql = "SELECT * FROM files WHERE file_id=$id";
+    $result = mysqli_query($mysqli, $sql);
+
+    $file = mysqli_fetch_assoc($result);
+    
+    $filepath = 'uploads' . $file['name'];
+
+    if (file_exists($filepath)) {
+        header('Content-Description: File Transfer');
+        header('Content-Type: aplication/octet-stream');
+        header('Content-Disposition:attachment; filename=' . basename($filepath));
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize('uploads/' . $file['name']));
+        readfile('uploads/' . $file['name']);
+        
+
+        //Updating dowloads count
+        $newcount = $file['downloads'] + 1;
+        $updateQuery = "UPDATE files SET downloads=$newcount WHERE file_id=$id";
+        mysqli_query($mysqli, $updateQuery);
+        exit;
+    }else{
+        printf("Error: %s\n", mysqli_error($mysqli));
+        exit();
+        echo "Could not download the file";
+    }
+}
 ?>
