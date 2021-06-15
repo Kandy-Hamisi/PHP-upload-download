@@ -16,6 +16,9 @@ if (isset($_POST['save'])) { //if save button is clicked on submit
 
     //name of the uploaded file
     $filename = $_FILES['myfile']['name'];
+    if (empty($filename)) {
+        echo "You must upload a file";
+    }
 
     //destination of the file on the server
     $destination = "uploads/". $filename;
@@ -36,7 +39,7 @@ if (isset($_POST['save'])) { //if save button is clicked on submit
         if (move_uploaded_file($file, $destination)) {
             $sql = "INSERT INTO files(name, size, downloads) VALUES('$filename', $size, 0)";
             if (mysqli_query($mysqli, $sql)) {
-                echo "File uploaded successfully";
+                echo "Success";
             }
         }else{
             echo "Failed to upload file";
@@ -74,10 +77,9 @@ if (isset($_GET['file_id'])) {
         $newcount = $file['downloads'] + 1;
         $updateQuery = "UPDATE files SET downloads=$newcount WHERE file_id=$id";
         mysqli_query($mysqli, $updateQuery);
-        exit;
+        echo "Success";
     }else{
-        printf("Error: %s\n", mysqli_error($mysqli));
-        exit();
+        
         echo "Could not download the file";
     }
 }

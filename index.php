@@ -9,12 +9,21 @@
   <body>
     <div class="container">
       <div class="row">
-        <form action="index.php" method="post" enctype="multipart/form-data" >
-          <h3>Upload File</h3>
-          <input type="file" name="myfile"> <br>
-          <button type="submit" name="save">upload</button>
-        </form>
+        <section class="myform">
+          <form method="POST" enctype="multipart/form-data">
+            <h3>Upload File</h3>
+            <div class="error-success-text">
+              
+            </div>
+            <input type="file" name="myfile"> <br>
+            <!-- <button class="btn" type="submit" name="save">upload</button> -->
+            <div class="button">
+              <input type="submit" name="save" value="Upload">
+            </div>
+          </form>
+        </section>
       </div>
     </div>
+    <script src="Javascript/upload.js"></script>
   </body>
 </html>
